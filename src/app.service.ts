@@ -13,7 +13,7 @@ export class AppService {
     const result = await firstValueFrom(this.httpService
       .get('https://fantasy.premierleague.com/api/bootstrap-static/'));
     let players: any[] = [];
-    result.data.elements.filter(e => !shouldBeFilltered(e, filter_options))
+    result.data.elements.filter(e => !this.shouldBeFilltered(e, filter_options))
       .forEach(element => {
         let cost = element.now_cost / 10;
         let points_per_pound = element.total_points / cost;
@@ -32,9 +32,9 @@ export class AppService {
     players.sort((a, b) => b.points_per_pound - a.points_per_pound);
     return players;
   }
-}
 
-function shouldBeFilltered(element: any, filter_options: Map<string, any>): boolean {
-  let cost = element.now_cost / 10;
-  return cost >= filter_options.get("max_price") || cost <= filter_options.get("min_price");
+  shouldBeFilltered(element: any, filter_options: Map<string, any>): boolean {
+    let cost = element.now_cost / 10;
+    return cost >= filter_options.get("max_price") || cost <= filter_options.get("min_price");
+  }
 }
