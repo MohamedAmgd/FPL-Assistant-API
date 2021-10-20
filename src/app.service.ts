@@ -33,6 +33,30 @@ export class AppService {
     return players;
   }
 
+  async getPlayerCostChange(filter_options: any): Promise<any> {
+    const result = await firstValueFrom(this.httpService
+      .get('https://fantasy.premierleague.com/api/bootstrap-static/'));
+    let players: any[] = [];
+    result.data.elements.filter(e => !this.shouldBeFilltered(e, filter_options))
+      .forEach(element => {
+        players.push({
+          id: element.id,
+          name: element.first_name + " " + element.second_name,
+          cost_change_event: element.cost_change_event / 10,
+          cost_change_start: element.cost_change_start / 10,
+          total_points: element.total_points,
+          minutes: element.minutes,
+          cost: element.now_cost / 10
+        });
+      })
+    players.sort((a, b) => {
+      if (b.cost_change_event === a.cost_change_event) {
+        return b.cost_change_start - a.cost_change_start;
+      }
+      return b.cost_change_event - a.cost_change_event;
+    });
+    return players;
+  }
   shouldBeFilltered(element: any, filter_options: Map<string, any>): boolean {
     let cost = element.now_cost / 10;
     return cost >= filter_options.get("max_price") || cost <= filter_options.get("min_price");
