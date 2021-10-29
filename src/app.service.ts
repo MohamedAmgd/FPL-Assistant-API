@@ -10,7 +10,7 @@ export class AppService {
     return 'Hello World!';
   }
 
-  async getPlayerPointsPerPound(filter_options: any): Promise<any> {
+  async getPlayerPointsPerPound(filter_options: any, sort_dir: string): Promise<any> {
     const result = await firstValueFrom(this.httpService
       .get('https://fantasy.premierleague.com/api/bootstrap-static/'));
     let players: any[] = [];
@@ -30,11 +30,14 @@ export class AppService {
           cost: cost
         });
       })
-    players.sort((a, b) => b.points_per_pound - a.points_per_pound);
+    if (sort_dir === 'asc') {
+      players.sort((a, b) => a.points_per_pound - b.points_per_pound);
+    } else
+      players.sort((a, b) => b.points_per_pound - a.points_per_pound);
     return players;
   }
 
-  async getPlayerCostChange(filter_options: any): Promise<any> {
+  async getPlayerCostChange(filter_options: any, sort_dir: string): Promise<any> {
     const result = await firstValueFrom(this.httpService
       .get('https://fantasy.premierleague.com/api/bootstrap-static/'));
     let players: any[] = [];
@@ -50,16 +53,25 @@ export class AppService {
           cost: element.now_cost / 10
         });
       })
-    players.sort((a, b) => {
-      if (b.cost_change_event === a.cost_change_event) {
-        return b.cost_change_start - a.cost_change_start;
-      }
-      return b.cost_change_event - a.cost_change_event;
-    });
+    if (sort_dir === 'asc') {
+      players.sort((a, b) => {
+        if (b.cost_change_event === a.cost_change_event) {
+          return a.cost_change_start - b.cost_change_start;
+        }
+        return a.cost_change_event - b.cost_change_event;
+      });
+    } else {
+      players.sort((a, b) => {
+        if (b.cost_change_event === a.cost_change_event) {
+          return b.cost_change_start - a.cost_change_start;
+        }
+        return b.cost_change_event - a.cost_change_event;
+      });
+    }
     return players;
   }
 
-  async getPlayerCostChangePrediction(filter_options: any): Promise<any> {
+  async getPlayerCostChangePrediction(filter_options: any, sort_dir: string): Promise<any> {
     let secrectParam = await this.getSecretParam();
     const headersRequest = {
       'Referer': 'http://www.fplstatistics.co.uk/Home/IndexAndroid2',
@@ -92,9 +104,15 @@ export class AppService {
           fixtures: element.fixtures
         });
       })
-    players.sort((a, b) => {
-      return b.target - a.target;
-    });
+    if (sort_dir === 'asc') {
+      players.sort((a, b) => {
+        return a.target - b.target;
+      });
+    } else {
+      players.sort((a, b) => {
+        return b.target - a.target;
+      });
+    }
     return players;
   }
   async getSecretParam() {

@@ -7,7 +7,8 @@ export class AppController {
 
   @Get("points_per_pound")
   getPlayerPointsPerPound(@Query("min_price") min_price: number,
-    @Query("max_price") max_price: number) {
+    @Query("max_price") max_price: number,
+    @Query("sort_dir") sort_dir: string) {
 
     let filter_options = new Map();
     if (min_price) {
@@ -16,12 +17,16 @@ export class AppController {
     if (max_price) {
       filter_options.set("max_price", max_price);
     }
-    return this.appService.getPlayerPointsPerPound(filter_options);
+    if (!sort_dir) {
+      sort_dir = 'dsc'
+    }
+    return this.appService.getPlayerPointsPerPound(filter_options, sort_dir);
   }
 
   @Get("cost_change")
   getPlayerCostChange(@Query("min_price") min_price: number,
-    @Query("max_price") max_price: number) {
+    @Query("max_price") max_price: number,
+    @Query("sort_dir") sort_dir: string) {
 
     let filter_options = new Map();
     if (min_price) {
@@ -30,12 +35,16 @@ export class AppController {
     if (max_price) {
       filter_options.set("max_price", max_price);
     }
-    return this.appService.getPlayerCostChange(filter_options);
+    if (!sort_dir) {
+      sort_dir = 'dsc'
+    }
+    return this.appService.getPlayerCostChange(filter_options, sort_dir);
   }
 
   @Get("cost_change_prediction")
   getPlayerCostChangePrediction(@Query("min_price") min_price: number,
-    @Query("max_price") max_price: number) {
+    @Query("max_price") max_price: number,
+    @Query("sort_dir") sort_dir: string) {
 
     let filter_options = new Map();
     if (min_price) {
@@ -44,6 +53,9 @@ export class AppController {
     if (max_price) {
       filter_options.set("max_price", max_price);
     }
-    return this.appService.getPlayerCostChangePrediction(filter_options);
+    if (!sort_dir) {
+      sort_dir = 'dsc'
+    }
+    return this.appService.getPlayerCostChangePrediction(filter_options, sort_dir);
   }
 }
