@@ -127,7 +127,7 @@ export class AppService {
         let endIndexOfParamName = decodedScript.indexOf('\",\"', startIndexOfParamName);
         let startIndexOfParamValue = decodedScript.indexOf('"\\x76\\x61\\x6C\\x75\\x65":') + '"\\x76\\x61\\x6C\\x75\\x65":'.length;
         let endIndexOfParamValue = decodedScript.indexOf("});", startIndexOfParamValue);
-        let paramName = decodedScript.substring(startIndexOfParamName, endIndexOfParamName);
+        let paramName = encodeURIComponent(decodedScript.substring(startIndexOfParamName, endIndexOfParamName));
         let paramValue = decodedScript.substring(startIndexOfParamValue, endIndexOfParamValue);
         params.push({
           paramName: paramName,
