@@ -69,7 +69,7 @@ export class PlayerService {
         return params[0];
     }
 
-    async getAllPlayers(): Promise<Player[]> {
+    async getAll(): Promise<Player[]> {
         let players: Player[] = [];
         const fplPlayers = await this.getFplBootstrapPlayers();
         const fplStatisticsPlayers = await this.getFplStatisticsPlayers();
@@ -103,5 +103,18 @@ export class PlayerService {
             players.push(player);
         });
         return players;
+    }
+
+    async getOne(id: string): Promise<Player> {
+        let players = await this.getAll();
+        let result: Player;
+        players.forEach(player => {
+            if (player.id == id) {
+                result = player;
+                console.log('found');
+                return;
+            }
+        });
+        return result;
     }
 }

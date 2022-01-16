@@ -13,8 +13,11 @@ export class AppService {
   ) { }
 
   async getAllPlayers(filterOptions: FilterOptions): Promise<Player[]> {
-    let players = await this.playerService.getAllPlayers();
+    let players = await this.playerService.getAll();
     return this.filterService.filterAndSortList(players, filterOptions);
+  }
+  async getOnePlayer(id: string): Promise<Player> {
+    return this.playerService.getOne(id);
   }
 
 }
