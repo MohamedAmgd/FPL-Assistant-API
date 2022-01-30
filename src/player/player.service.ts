@@ -8,15 +8,18 @@ import { Player } from './entities/player.entity';
 export class PlayerService {
     constructor(private readonly httpService: HttpService) { }
 
+    getPlayerPositionString(position: number) {
+        const positions = ["", "Goalkeeper", "Defender", "Midfielder", "Forward"];
+        return positions[position]
+    }
     findPlayerInFplStatisticsList(playerData: any, list: any[]): any[] {
-        const positions = ["", "G", "D", "M", "F"];
         let player: any;
         list.forEach((element: string[]) => {
             let ownership_1: number = Number.parseFloat(element[5]);
             let ownership_2: number = Number.parseFloat(playerData.selected_by_percent);
             if (element[1] === playerData.web_name
                 && ownership_1 === ownership_2
-                && element[3].toUpperCase() === positions[playerData.element_type]
+                && element[3].toUpperCase() === this.getPlayerPositionString(playerData.element_type).charAt(0)
                 && element[6] === (playerData.now_cost / 10).toString()) {
                 player = element;
                 return;
@@ -82,17 +85,17 @@ export class PlayerService {
                 first_name: element.first_name,
                 second_name: element.second_name,
                 team: fplStatisticsPlayer[2],
-                position: fplStatisticsPlayer[3],
+                position: this.getPlayerPositionString(element.element_type),
                 status: element.status,
-                owned_by: element.selected_by_percent,
+                owned_by: Number.parseFloat(element.selected_by_percent),
                 price: playerPrice,
                 cost_change_event: element.cost_change_event / 10,
-                cost_change_prediction: fplStatisticsPlayer[11],
+                cost_change_prediction: Number.parseFloat(fplStatisticsPlayer[11]),
                 fixtures: fplStatisticsPlayer[16],
                 img_url: `https://resources.premierleague.com/premierleague/photos/players/110x140/p${element.code}.png`,
                 dreamteam_count: element.dreamteam_count,
                 in_dreamteam: element.in_dreamteam,
-                form: element.form,
+                form: Number.parseFloat(element.form),
                 chance_of_playing_this_round: element.chance_of_playing_this_round,
                 chance_of_playing_next_round: element.chance_of_playing_next_round,
                 news: element.news,
@@ -111,7 +114,6 @@ export class PlayerService {
         players.forEach(player => {
             if (player.id == id) {
                 result = player;
-                console.log('found');
                 return;
             }
         });
