@@ -79,7 +79,7 @@ export class PlayerService {
         fplPlayers.forEach(element => {
             const fplStatisticsPlayer = this.findPlayerInFplStatisticsList(element, fplStatisticsPlayers) || [];
             const playerPrice = element.now_cost / 10;
-            const playerPointsPerPrice = element.total_points / playerPrice;
+            const playerPointsPerPrice = Number.parseFloat((element.total_points / playerPrice).toFixed(2));
             let player: Player = {
                 id: element.id,
                 first_name: element.first_name,
