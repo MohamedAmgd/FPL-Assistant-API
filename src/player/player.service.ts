@@ -74,8 +74,9 @@ export class PlayerService {
 
     async getAll(): Promise<Player[]> {
         let players: Player[] = [];
-        const fplPlayers = await this.getFplBootstrapPlayers();
-        const fplStatisticsPlayers = await this.getFplStatisticsPlayers();
+        const data = await Promise.all([this.getFplBootstrapPlayers(), this.getFplStatisticsPlayers()])
+        const fplPlayers = data[0];
+        const fplStatisticsPlayers = data[1];
         fplPlayers.forEach(element => {
             const fplStatisticsPlayer = this.findPlayerInFplStatisticsList(element, fplStatisticsPlayers) || [];
             const playerPrice = element.now_cost / 10;
