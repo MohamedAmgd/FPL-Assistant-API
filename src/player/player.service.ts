@@ -3,6 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import * as cheerio from 'cheerio';
 import { Player } from './entities/player.entity';
+import * as fs from 'fs';
 
 @Injectable()
 export class PlayerService {
@@ -39,23 +40,30 @@ export class PlayerService {
     }
 
     async getFplStatisticsPlayers(): Promise<any> {
-        let secrectParam = await this.getSecretParam();
-        const headersRequest = {
-            'Referer': 'http://www.fplstatistics.co.uk/Home/IndexAndroid2',
-            'X-Requested-With': 'XMLHttpRequest'
-        };
-        const result = await firstValueFrom(this.httpService
-            .get(`http://www.fplstatistics.co.uk/Home/AjaxPricesIHandler?${secrectParam.paramName}=${secrectParam.paramValue}&pyseltype=0&_=${Date.now()}`
-                , { headers: headersRequest }));
-        return result.data.aaData;
+        try {
+
+            let secrectParam = await this.getSecretParam();
+            const headersRequest = {
+                'Referer': 'http://www.fplstatistics.co.uk/Home/IndexAndroid2',
+                'X-Requested-With': 'XMLHttpRequest'
+            };
+            const result = await firstValueFrom(this.httpService
+                .get(`http://www.fplstatistics.co.uk/Home/AjaxPricesIHandler?${secrectParam.paramName}=${secrectParam.paramValue}&pyseltype=0&_=${Date.now()}`
+                    , { headers: headersRequest }));
+            return result.data.aaData;
+        } catch {
+            return [];
+        }
     }
     async getSecretParam() {
         const homeHtml = await firstValueFrom(this.httpService
             .get(`http://www.fplstatistics.co.uk/`));
         const $ = cheerio.load(homeHtml.data);
         let params = [];
+        let notFound = true;
         $('script', homeHtml.data).each((i, e) => {
             if (e.attribs.type === "text/javascript") {
+                notFound = false;
                 let decodedScript = $(e.children).text();
                 let startIndexOfParamName = decodedScript.indexOf('\"\\x6E\\x61\\x6D\\x65\":\"') + '\"\\x6E\\x61\\x6D\\x65\":\"'.length;
                 let endIndexOfParamName = decodedScript.indexOf('\",\"', startIndexOfParamName);
@@ -69,6 +77,9 @@ export class PlayerService {
                 });
             }
         });
+        if (notFound) {
+            throw new Error();
+        }
         return params[0];
     }
 
