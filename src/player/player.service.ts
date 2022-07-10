@@ -57,7 +57,7 @@ export class PlayerService {
     }
     async getSecretParam() {
         const homeHtml = await firstValueFrom(this.httpService
-            .get(`http://www.fplstatistics.co.uk/`));
+            .get(`http://www.fplstatistics.co.uk/`, { headers: { Cookie: "OKCookie=1" } }));
         const $ = cheerio.load(homeHtml.data);
         let params = [];
         let notFound = true;
