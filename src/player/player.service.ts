@@ -3,7 +3,6 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import * as cheerio from 'cheerio';
 import { Player } from './entities/player.entity';
-import * as fs from 'fs';
 
 @Injectable()
 export class PlayerService {
