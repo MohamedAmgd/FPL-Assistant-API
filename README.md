@@ -3,29 +3,29 @@
 </h1>
 
 <h3 align="center">
-  FPL Assisstant Api
+  FPL Assisstant API
 </h3>
 
-<p align="center">Rest Api</p>
+<p align="center">REST API</p>
 
 <p align="center">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/MohamedAmgd/FPL-Assistant-Api">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/MohamedAmgd/FPL-Assistant-API">
 
   <a href="https://www.linkedin.com/in/mohamedamgd/">
     <img alt="Made by" src="https://img.shields.io/badge/made_by-Mohamed_Amgd-green">
   </a>
   
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/MohamedAmgd/FPL-Assistant-Api">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/MohamedAmgd/FPL-Assistant-API">
   
-  <a href="https://github.com/MohamedAmgd/FPL-Assistant-Api/commits/main">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/MohamedAmgd/FPL-Assistant-Api">
+  <a href="https://github.com/MohamedAmgd/FPL-Assistant-API/commits/main">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/MohamedAmgd/FPL-Assistant-API">
   </a>
   
-  <a href="https://github.com/MohamedAmgd/FPL-Assistant-Api/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/MohamedAmgd/FPL-Assistant-Api">
+  <a href="https://github.com/MohamedAmgd/FPL-Assistant-API/issues">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/MohamedAmgd/FPL-Assistant-API">
   </a>
   
-  <img alt="GitHub" src="https://img.shields.io/github/license/MohamedAmgd/FPL-Assistant-Api">
+  <img alt="GitHub" src="https://img.shields.io/github/license/MohamedAmgd/FPL-Assistant-API?cacheSeconds=0">
 </p>
 
 <p align="center">
@@ -38,7 +38,7 @@
 
 ## 👨🏻‍💻 About the project
 
-- <p style="color: red;">A Rest Api that serves a usefull info and stats about football players in fantasy premier league for <a href="https://github.com/MohamedAmgd/FPL-Assistant">FPL Assistant App</a>
+- <p style="color: red;">A REST API that serves a usefull info and stats about football players in fantasy premier league for <a href="https://github.com/MohamedAmgd/FPL-Assistant">FPL Assistant App</a>
 - It serves for each player:-
   <ul>
 - A prediction for price change
@@ -53,7 +53,7 @@
 
 ## 🚀 Technologies
 
-Technologies that I used to develop this Rest Api
+Technologies that I used to develop this REST API
 
 - [Node JS v16](https://nodejs.org/en/blog/release/v16.16.0)
 - [Typescript v4](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html)
@@ -122,14 +122,14 @@ $ yarn run start:prod
 # Fork using GitHub official command line
 # If you don't have the GitHub CLI, use the web site to do that.
 
-$ gh repo fork MohamedAmgd/FPL-Assistant-Api
+$ gh repo fork MohamedAmgd/FPL-Assistant-API
 ```
 
 **Follow the steps below**
 
 ```bash
 # Clone your fork
-$ git clone your-fork-url && cd FPL-Assistant-Api
+$ git clone your-fork-url && cd FPL-Assistant-API
 
 # Create a branch with your feature
 $ git checkout -b my-feature
